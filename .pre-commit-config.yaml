@@ -1,0 +1,29 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: fb9fc7b71b63ea94e7cfb70f4351e9bddea181d3
+    hooks:
+      - id: check-added-large-files
+      - id: check-ast
+      - id: check-builtin-literals
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-vcs-permalinks
+      - id: debug-statements
+      - id: double-quote-string-fixer
+      - id: end-of-file-fixer
+      - id: fix-byte-order-marker
+      - id: fix-encoding-pragma
+      - id: mixed-line-ending
+      - id: pretty-format-json
+      - id: sort-simple-yaml
+      - id: trailing-whitespace
+  - repo: https://github.com/jumanjihouse/pre-commit-hooks
+    rev: 2.1.4 # or specific git tag
+    hooks:
+      - id: forbid-binary
+      - id: git-dirty
+  - repo: git@github.com:coyainsurance/pre-commit-scalafmt.git
+    sha: 1.0.1 # you probably do not want to use latest version, but rather pin it to specific commit and update manually
+    hooks:
+    - id: scalafmt
+      args: [ -p9090, -t ] # run in server mode on port 9090 and pass `--test` to scalafmt; alternatively you can place here other supported cmdline arguments
