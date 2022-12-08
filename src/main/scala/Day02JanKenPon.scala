@@ -1,5 +1,3 @@
-package day02
-
 import scala.io.Source
 
 enum Hand(val score: Int) {

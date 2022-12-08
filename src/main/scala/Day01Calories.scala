@@ -1,4 +1,3 @@
-package day01
 
 import scala.io.Source
 
