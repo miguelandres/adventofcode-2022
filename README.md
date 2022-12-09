@@ -12,4 +12,5 @@ After that the project should *just work* on vscode.
 ## Switching to Kotlin
 
 I decided it was time to learn Kotlin. Now I'm using this project on IntelliJ (it was much more
-work to get it running on vscode), and just the default brew kotlin and temurin19 install on mac.
+work to get it running on vscode), and just `brew install temurin19` and `brew install kotlin`
+should work
