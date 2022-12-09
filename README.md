@@ -1,6 +1,6 @@
-# Miguel's Advent of Code 2021
+# Miguel's Advent of Code 2022
 
-I'm doing this year in Scala, again, I'm using [vscode](https://code.visualstudio.com)
+I'm started this year in Scala, again, I'm using [vscode](https://code.visualstudio.com)
 and the [metals extension](https://scalameta.org/metals/docs/editors/vscode/) for this repo.
 
 You need to have a JDK 8/11 and scala installed for scalameta to work, if anything I
@@ -8,3 +8,8 @@ recommend [installing temurin 11](https://adoptium.net) and then installing scal
 homebrew `brew install scala` (assuming you're on a mac).
 
 After that the project should *just work* on vscode.
+
+## Switching to Kotlin
+
+I decided it was time to learn Kotlin. Now I'm using this project on IntelliJ (it was much more
+work to get it running on vscode), and just the default brew kotlin and temurin19 install on mac.
