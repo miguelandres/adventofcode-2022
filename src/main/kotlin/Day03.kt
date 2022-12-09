@@ -3,12 +3,12 @@ import java.io.File
 fun main() {
     var lines = File("input/d03p01.txt").readLines()
     val packs = lines.map { line ->
-        Pair(line.take(line.length/2), line.substring(line.length/2))
+        Pair(line.take(line.length / 2), line.substring(line.length / 2))
     }
 
     val priorities: List<Int> = packs.map { pair ->
         pair.first.toSet().intersect(pair.second.toSet()).first()
-    }.map { c  ->
+    }.map { c ->
         priority(c)
     }
 
@@ -18,8 +18,9 @@ fun main() {
     /// Part 2
 
     var badgePriorities = 0
-    while(!lines.isEmpty()) {
-        val group: Set<Char> = lines.take(3).map { s -> s.toSet() }.reduce{ s1: Set<Char>, s2: Set<Char> -> s1.intersect(s2)}
+    while (!lines.isEmpty()) {
+        val group: Set<Char> =
+            lines.take(3).map { s -> s.toSet() }.reduce { s1: Set<Char>, s2: Set<Char> -> s1.intersect(s2) }
         lines = lines.drop(3)
         badgePriorities += priority(group.first())
     }
