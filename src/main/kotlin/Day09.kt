@@ -5,6 +5,10 @@ data class Position(val x:Int, val y:Int) {
     fun move(direction: Direction): Position{
         return Position(x + direction.deltaX, y + direction.deltaY)
     }
+
+    fun inRanges(rangeX: IntRange, rangeY:IntRange): Boolean {
+        return rangeX.contains(x) && rangeY.contains(y)
+    }
     fun adjustTail(headPosition: Position): Position {
         val deltaX = headPosition.x - x
         val deltaY = headPosition.y - y
