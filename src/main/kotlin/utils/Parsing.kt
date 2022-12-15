@@ -11,3 +11,5 @@ private fun padInputNumber(n: Int) = n.toString().padStart(2, '0')
 
 fun readAocInput(day: Int, part: Int = 1) =
     File("input/d${padInputNumber(day)}p${padInputNumber(part)}.txt").readLines()
+
+fun splitWithPrefix(s: String, prefix: String, delimiter: String) = s.drop(prefix.length).split(delimiter)

@@ -1,9 +1,14 @@
 import utils.DirectionWithDiagonals
 import utils.Position
 import utils.readAocInput
+import utils.splitWithPrefix
 
 fun parsePosition(s: String, delimiter: String = ","): Position {
     val parts = s.split(delimiter)
+    return Position(parts[0].toInt(), parts[1].toInt())
+}
+fun parsePositionWithAxisNames(s: String, delimiter: String): Position {
+    val parts = splitWithPrefix(s, "x=", "${delimiter}y=")
     return Position(parts[0].toInt(), parts[1].toInt())
 }
 

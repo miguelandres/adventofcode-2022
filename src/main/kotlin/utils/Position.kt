@@ -1,5 +1,9 @@
 package utils
 
+import kotlin.math.abs
+
+fun extendRanges(ranges: Iterable<IntRange>) = ranges.minOf { it.first }..ranges.maxOf { it.last }
+
 enum class Direction(val deltaX: Int, val deltaY: Int) {
     UP(-1, 0),
     DOWN(1, 0),
@@ -43,6 +47,16 @@ data class Position(val x: Int, val y: Int) {
 
     fun inRanges(rangeX: IntRange, rangeY: IntRange): Boolean {
         return rangeX.contains(x) && rangeY.contains(y)
+    }
+
+    fun manhattanDistance(other: Position) = abs(x - other.x) + abs(y - other.y)
+
+    fun pointsAtManhattanDistance(distance: Int): Set<Position> {
+        val rangeX = -distance..distance
+        return rangeX.flatMap { deltaX ->
+            val distanceY = distance - abs(deltaX)
+            listOf(Position(x + deltaX, y - distanceY), Position(x + deltaX, y + distanceY))
+        }.toSet()
     }
 
     fun adjustTail(headPosition: Position): Position {
