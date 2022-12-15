@@ -1,4 +1,4 @@
-import java.io.File
+import utils.readAocInput
 
 abstract class FileSystemNode(val name: String, val parent: Directory?) {
 
@@ -54,7 +54,7 @@ fun calculateSizes(cwd: Directory): Map<String, Pair<Directory, Int>> {
 }
 
 fun main() {
-    val lines = File("input/d07p01.txt").readLines()
+    val lines = readAocInput(7)
     val root = Directory("", null)
     var cwd = root
     for (line in lines) {

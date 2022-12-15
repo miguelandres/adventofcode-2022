@@ -1,8 +1,8 @@
-import java.io.File
+import utils.readAocInput
 import kotlin.math.abs
 
 fun main() {
-    val increases = File("input/d10p01.txt").readLines().flatMap {
+    val increases = readAocInput(10).flatMap {
         if (it == "noop") {
             sequenceOf(0)
         } else {

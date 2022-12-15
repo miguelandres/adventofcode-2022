@@ -1,8 +1,8 @@
 import utils.parseRange
-import java.io.File
+import utils.readAocInput
 
 fun main() {
-    val assignments = File("input/d04p01.txt").readLines().map { s ->
+    val assignments = readAocInput(4).map { s ->
         val parts = s.split(",").map { r -> parseRange(r) }
         Pair(parts[0], parts[1])
     }

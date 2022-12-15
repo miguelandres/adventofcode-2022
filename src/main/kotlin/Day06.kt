@@ -1,4 +1,4 @@
-import java.io.File
+import utils.readAocInput
 
 fun findStartOfSignal(line: String, length: Int = 4): Int {
     for (i in 0 until line.length - length) {
@@ -8,7 +8,7 @@ fun findStartOfSignal(line: String, length: Int = 4): Int {
 }
 
 fun main() {
-    var line = File("input/d06p01.txt").readLines().first()
+    var line = readAocInput(6).first()
 
     println(findStartOfSignal(line))
     println(findStartOfSignal(line, 14))

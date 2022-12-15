@@ -1,11 +1,11 @@
 import utils.Direction
 import utils.Position
-import java.io.File
+import utils.readAocInput
 
 fun main() {
-    val instructions = File("input/d09p01.txt").readLines().map { line ->
-        Pair (
-            when(line[0]) {
+    val instructions = readAocInput(9).map { line ->
+        Pair(
+            when (line[0]) {
                 'R' -> Direction.RIGHT
                 'L' -> Direction.LEFT
                 'U' -> Direction.UP
@@ -15,14 +15,14 @@ fun main() {
         )
     }
 
-    var positionSet = calculateTailPositions(instructions,2)
+    var positionSet = calculateTailPositions(instructions, 2)
     println(positionSet.count())
 
-    positionSet = calculateTailPositions(instructions,10)
+    positionSet = calculateTailPositions(instructions, 10)
     println(positionSet.count())
 }
 
-private fun calculateTailPositions(instructions: List<Pair<Direction, Int>>, knots:Int): Set<Position> {
+private fun calculateTailPositions(instructions: List<Pair<Direction, Int>>, knots: Int): Set<Position> {
     val knotPosition = Array(knots) { Position(0, 0) }
 
     var positionSet = setOf(knotPosition.last())

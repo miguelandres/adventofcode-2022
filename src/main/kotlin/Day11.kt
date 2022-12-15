@@ -1,4 +1,4 @@
-import java.io.File
+import utils.readAocInput
 import java.math.BigInteger
 
 data class Monkey(
@@ -23,7 +23,7 @@ fun parseOperation(operator: String, operand: ULong?): (ULong) -> ULong {
 
 fun main() {
     val monkeys =
-        File("input/d11p01.txt").readLines().filter { it.isNotEmpty() }.chunked(6).mapIndexed { index, lines ->
+        readAocInput(11).filter { it.isNotEmpty() }.chunked(6).mapIndexed { index, lines ->
             val operation = lines[2].split(" ")
             val operationFn = parseOperation(operation[operation.size - 2], operation.last().toULongOrNull())
             Monkey(

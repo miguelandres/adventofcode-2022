@@ -1,6 +1,6 @@
 import utils.DirectionWithDiagonals
 import utils.Position
-import java.io.File
+import utils.readAocInput
 
 
 fun parsePosition(s: String, delimiter: String = ","): Position {
@@ -10,14 +10,13 @@ fun parsePosition(s: String, delimiter: String = ","): Position {
 
 fun main() {
 
-    val pointSet =
-        File("input/d14p01.txt").readLines().flatMap {
-            val listPositions = it.split(" -> ").map { pos -> parsePosition(pos) }
-            val pairs = listPositions.dropLast(1).zip(listPositions.drop(1))
-            pairs.flatMap { pair ->
-                pair.first.cartesianLineTo(pair.second)!!
-            }.toHashSet()
+    val pointSet = readAocInput(14).flatMap {
+        val listPositions = it.split(" -> ").map { pos -> parsePosition(pos) }
+        val pairs = listPositions.dropLast(1).zip(listPositions.drop(1))
+        pairs.flatMap { pair ->
+            pair.first.cartesianLineTo(pair.second)!!
         }.toHashSet()
+    }.toHashSet()
 
 
     val grid = createGrid(pointSet)
@@ -35,7 +34,7 @@ fun main() {
 private fun simulate(grid: CaveGrid, maxDepth: Int? = null): Int {
     var count = -1
 
-    val initialPosition= Position(500,0)
+    val initialPosition = Position(500, 0)
     do {
         val passedMaxDepth = simulateFall(grid, maxDepth)
         count++
@@ -51,7 +50,6 @@ private fun createGrid(pointSet: HashSet<Position>, withFloor: Boolean = false):
             floorDepth else null
     )
 }
-
 
 
 enum class CaveContents {
@@ -76,7 +74,7 @@ class CaveGrid(private val grid: HashMap<Position, CaveContents>, private val fl
         val sortedY = filteredGrid.keys.sortedBy { it.y }
 
         return Pair(
-            (sortedX.first().x .. sortedX.last().x),
+            (sortedX.first().x..sortedX.last().x),
             (0..(floor ?: sortedY.last().y))
         )
     }
@@ -85,7 +83,7 @@ class CaveGrid(private val grid: HashMap<Position, CaveContents>, private val fl
         val ranges = rangeOfActiveCells()
         return (ranges.second).map { j ->
             ranges.first.map { i ->
-                when (this[Position(i,j)]) {
+                when (this[Position(i, j)]) {
                     CaveContents.ROCK -> '#'
                     CaveContents.AIR -> '.'
 
@@ -107,9 +105,10 @@ fun simulateFall(grid: CaveGrid, maxDepth: Int?): Boolean {
         DirectionWithDiagonals.RIGHT, DirectionWithDiagonals.UP_RIGHT, DirectionWithDiagonals.DOWN_RIGHT
     )
     while (true) {
-        if (position.y >= (maxDepth ?:1000)) return true
+        if (position.y >= (maxDepth ?: 1000)) return true
         position =
-            position.moveWithDiagonal(directions.find { grid[position.moveWithDiagonal(it)] == CaveContents.AIR } ?: break)
+            position.moveWithDiagonal(directions.find { grid[position.moveWithDiagonal(it)] == CaveContents.AIR }
+                ?: break)
     }
     grid[position] = CaveContents.SAND
     return false

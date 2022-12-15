@@ -1,9 +1,9 @@
 import utils.Direction
 import utils.Position
-import java.io.File
+import utils.readAocInput
 
 fun main() {
-    val grid = File("input/d08p01.txt").readLines().map { line ->
+    val grid = readAocInput(8).map { line ->
         line.map { c -> c.code - '0'.code }.toIntArray()
     }.toTypedArray()
 

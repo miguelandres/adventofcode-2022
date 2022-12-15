@@ -1,4 +1,4 @@
-import java.io.File
+import utils.readAocInput
 
 enum class Hand(private val score: Int) {
     ROCK(1) {
@@ -72,7 +72,7 @@ fun parseHand(s: String): Hand {
 }
 
 fun main() {
-    val lines = File("input/d02p01.txt").readLines().map { s -> s.split(" ") }
+    val lines = readAocInput(2).map { s -> s.split(" ") }
 
     val plays = lines.map { parts ->
         Pair(parseHand(parts[0]), parseHand(parts[1]))

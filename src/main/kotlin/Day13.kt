@@ -1,7 +1,6 @@
-import java.io.File
+import utils.readAocInput
 
-abstract class DistressMessage : Comparable<DistressMessage> {
-}
+abstract class DistressMessage : Comparable<DistressMessage>
 
 data class ListMessage(val list: List<DistressMessage>) : DistressMessage() {
     override fun compareTo(other: DistressMessage): Int {
@@ -47,7 +46,7 @@ data class IntMessage(val value: Int) : DistressMessage() {
 fun main() {
 
     val list =
-        File("input/d13p01.txt").readLines().asSequence().filter { it.isNotEmpty() }.map {
+        readAocInput(13).asSequence().filter { it.isNotEmpty() }.map {
             parseListMessage(it).first
         }
     val pairList = list.chunked(2).toList().map { Pair(it[0], it[1]) }

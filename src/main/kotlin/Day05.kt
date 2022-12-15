@@ -1,4 +1,4 @@
-import java.io.File
+import utils.readAocInput
 
 private fun executeOldInstruction(instruction: Triple<Int, Int, Int>, stacks: Array<MutableList<Char>>) {
     for (i in 1..instruction.first) {
@@ -15,7 +15,7 @@ private fun executeNewInstruction(instruction: Triple<Int, Int, Int>, stacks: Ar
 }
 
 fun main() {
-    val lines = File("input/d05p01.txt").readLines()
+    val lines = readAocInput(5)
     val breakIndex = lines.indexOf("")
 
     val stackLines = lines.take(breakIndex).reversed()

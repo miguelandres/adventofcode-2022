@@ -1,13 +1,13 @@
 import utils.Direction
 import utils.Position
-import java.io.File
+import utils.readAocInput
 
 
 fun main() {
     var start = Position(0, 0)
     var end = Position(0, 0)
     val grid =
-        File("input/d12p01.txt").readLines().mapIndexed { x, line ->
+        readAocInput(12).mapIndexed { x, line ->
             line.mapIndexed { y, c ->
                 when (c) {
                     'S' -> {

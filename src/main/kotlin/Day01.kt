@@ -1,7 +1,7 @@
-import java.io.File
+import utils.readAocInput
 
 fun main() {
-    val lines = File("input/d01p01.txt").readLines().map { s -> s.toIntOrNull() }
+    val lines = readAocInput(1).map { s -> s.toIntOrNull() }
         .fold(listOf(mutableListOf())) { elves: List<MutableList<Int>>, maybeCalories: Int? ->
             if (maybeCalories == null) {
                 elves.plusElement(mutableListOf())

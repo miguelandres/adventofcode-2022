@@ -18,7 +18,7 @@ enum class DirectionWithDiagonals(val deltaX: Int, val deltaY: Int) {
     RIGHT(0, 1)
 }
 
-data class Position(val x:Int, val y:Int) {
+data class Position(val x: Int, val y: Int) {
     fun move(direction: Direction): Position {
         return Position(x + direction.deltaX, y + direction.deltaY)
     }
@@ -28,7 +28,7 @@ data class Position(val x:Int, val y:Int) {
     }
 
     fun cartesianLineTo(other: Position): List<Position>? {
-        return if (x == other.x ) {
+        return if (x == other.x) {
             (y.coerceAtMost(other.y)..y.coerceAtLeast(other.y)).map { i ->
                 Position(x, i)
             }
@@ -39,13 +39,14 @@ data class Position(val x:Int, val y:Int) {
         } else null
     }
 
-    fun inRanges(rangeX: IntRange, rangeY:IntRange): Boolean {
+    fun inRanges(rangeX: IntRange, rangeY: IntRange): Boolean {
         return rangeX.contains(x) && rangeY.contains(y)
     }
+
     fun adjustTail(headPosition: Position): Position {
         val deltaX = headPosition.x - x
         val deltaY = headPosition.y - y
-        return if (deltaX in -1 .. 1 && deltaY in -1 .. 1) this
+        return if (deltaX in -1..1 && deltaY in -1..1) this
         else if (deltaX == 0) {
             Position(x, y + if (deltaY > 0) 1 else -1)
         } else if (deltaY == 0) {

@@ -1,7 +1,7 @@
-import java.io.File
+import utils.readAocInput
 
 fun main() {
-    var lines = File("input/d03p01.txt").readLines()
+    var lines = readAocInput(3)
     val packs = lines.map { line ->
         Pair(line.take(line.length / 2), line.substring(line.length / 2))
     }
