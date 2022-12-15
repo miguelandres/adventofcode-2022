@@ -36,7 +36,9 @@ data class Position(val x: Int, val y: Int) {
             (x.coerceAtMost(other.x)..x.coerceAtLeast(other.x)).map { i ->
                 Position(i, y)
             }
-        } else null
+        } else {
+            null
+        }
     }
 
     fun inRanges(rangeX: IntRange, rangeY: IntRange): Boolean {
@@ -46,8 +48,9 @@ data class Position(val x: Int, val y: Int) {
     fun adjustTail(headPosition: Position): Position {
         val deltaX = headPosition.x - x
         val deltaY = headPosition.y - y
-        return if (deltaX in -1..1 && deltaY in -1..1) this
-        else if (deltaX == 0) {
+        return if (deltaX in -1..1 && deltaY in -1..1) {
+            this
+        } else if (deltaX == 0) {
             Position(x, y + if (deltaY > 0) 1 else -1)
         } else if (deltaY == 0) {
             Position(x + if (deltaX > 0) 1 else -1, y)

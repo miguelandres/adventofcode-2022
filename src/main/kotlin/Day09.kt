@@ -35,7 +35,6 @@ private fun calculateTailPositions(instructions: List<Pair<Direction, Int>>, kno
             }
             positionSet = positionSet.plus(knotPosition.last())
         }
-
     }
     return positionSet
 }

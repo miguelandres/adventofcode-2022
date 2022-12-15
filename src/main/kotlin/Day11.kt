@@ -14,10 +14,11 @@ data class Monkey(
 fun parseOperation(operator: String, operand: ULong?): (ULong) -> ULong {
     return { x: ULong ->
         val list = listOf(x, operand ?: x)
-        if (operator == "+")
+        if (operator == "+") {
             list.reduce { a, b -> a + b }
-        else
+        } else {
             list.reduce { a, b -> a * b }
+        }
     }
 }
 
@@ -34,7 +35,6 @@ fun main() {
                 lines[4].split(" ").last().toInt(),
                 lines[5].split(" ").last().toInt()
             )
-
         }.toList()
 
     val monkeysRules1 = monkeys.map { it.copy() }

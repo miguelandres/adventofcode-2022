@@ -5,27 +5,21 @@ enum class Hand(private val score: Int) {
         override fun winningHand(): Hand =
             PAPER
 
-
         override fun losingHand(): Hand =
             SCISSORS
-
     },
     PAPER(2) {
         override fun winningHand(): Hand = SCISSORS
 
-
         override fun losingHand(): Hand =
             ROCK
-
     },
     SCISSORS(3) {
         override fun winningHand(): Hand =
             ROCK
 
-
         override fun losingHand(): Hand =
             PAPER
-
     };
 
     abstract fun winningHand(): Hand
@@ -57,7 +51,6 @@ enum class Hand(private val score: Int) {
         }
     }
 }
-
 
 fun parseHand(s: String): Hand {
     return when (s) {

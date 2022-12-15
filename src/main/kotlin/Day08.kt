@@ -12,7 +12,6 @@ fun main() {
     val visibleGrid = Array(grid.size) { i -> Array(grid[i].size) { false } }
 
     for (i in grid.indices) {
-
         var maxSize = -1
         for (j in grid[i].indices) {
             if (grid[i][j] > maxSize) {
@@ -31,7 +30,6 @@ fun main() {
     }
 
     for (j in 0 until grid[0].size) {
-
         var maxSize = -1
         for (i in grid.indices) {
             if (grid[i][j] > maxSize) {
@@ -65,9 +63,11 @@ fun calculateScore(pos: Position, grid: Array<IntArray>): Int {
 }
 
 fun calculateScore(
-    pos: Position, grid: Array<IntArray>, direction: Direction
+    pos: Position,
+    grid: Array<IntArray>,
+    direction: Direction
 ):
-        Int {
+    Int {
     return calculateScoreForHeight(pos.move(direction), grid[pos.x][pos.y], grid, direction)
 }
 

@@ -44,7 +44,6 @@ fun parseFileOrDir(line: String, parent: Directory): FileSystemNode {
 }
 
 fun calculateSizes(cwd: Directory): Map<String, Pair<Directory, Int>> {
-
     val mapSubDirs = cwd.contents.map { it.value }.filterIsInstance<Directory>().map { dir -> calculateSizes(dir) }
         .fold(mapOf<String, Pair<Directory, Int>>()) { a, b ->
             a.plus(b)
@@ -81,7 +80,6 @@ fun main() {
 
     println(smallDirs.map { Pair(it.first, it.third) })
     println(smallDirs.sumOf { it.third })
-
 
     val maxSpace = 70000000
     val needed = 30000000

@@ -14,8 +14,7 @@ fun main() {
 
     println(priorities.sum())
 
-
-    /// Part 2
+    // / Part 2
 
     var badgePriorities = 0
     while (!lines.isEmpty()) {

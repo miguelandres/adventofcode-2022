@@ -7,10 +7,12 @@ fun main() {
         Pair(parts[0], parts[1])
     }
 
-    println(assignments.count { pair ->
-        val intersectCount = pair.second.intersect(pair.first).count()
-        intersectCount == pair.first.count() || intersectCount == pair.second.count()
-    })
+    println(
+        assignments.count { pair ->
+            val intersectCount = pair.second.intersect(pair.first).count()
+            intersectCount == pair.first.count() || intersectCount == pair.second.count()
+        }
+    )
 
     println(assignments.count { pair -> pair.second.intersect(pair.first).isNotEmpty() })
 }

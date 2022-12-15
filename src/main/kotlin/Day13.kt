@@ -44,7 +44,6 @@ data class IntMessage(val value: Int) : DistressMessage() {
 }
 
 fun main() {
-
     val list =
         readAocInput(13).asSequence().filter { it.isNotEmpty() }.map {
             parseListMessage(it).first
@@ -61,7 +60,6 @@ fun main() {
     val decoderKey =
         (sortedList.indexOf("[[2]]") + 1) * (sortedList.indexOf("[[6]]") + 1)
     println(decoderKey)
-
 }
 
 fun parseListMessage(s: String): Pair<ListMessage, Int> {

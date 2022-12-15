@@ -2,7 +2,6 @@ import utils.Direction
 import utils.Position
 import utils.readAocInput
 
-
 fun main() {
     var start = Position(0, 0)
     var end = Position(0, 0)
