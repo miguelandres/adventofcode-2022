@@ -58,5 +58,3 @@ private fun parseStacksFromLines(stackLines: List<String>): Array<MutableList<Ch
     }
     return stacks
 }
-
-

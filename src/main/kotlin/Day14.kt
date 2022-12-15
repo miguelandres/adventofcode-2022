@@ -113,4 +113,3 @@ fun simulateFall(grid: CaveGrid, maxDepth: Int?): Boolean {
     grid[position] = CaveContents.SAND
     return false
 }
-
