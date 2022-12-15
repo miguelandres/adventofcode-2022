@@ -1,23 +1,6 @@
+import utils.Direction
+import utils.Position
 import java.io.File
-
-enum class Direction(val deltaX: Int, val deltaY: Int) {
-    UP(-1, 0),
-    DOWN(1, 0),
-    LEFT(0, -1),
-    RIGHT(0, 1)
-}
-
-enum class DirectionWithDiagonals(val deltaX: Int, val deltaY: Int) {
-    UP(-1, 0),
-    UP_LEFT(-1, -1),
-    UP_RIGHT(-1, 1),
-    DOWN(1, 0),
-    DOWN_LEFT(1, -1),
-    DOWN_RIGHT(1, 1),
-    LEFT(0, -1),
-    RIGHT(0, 1)
-}
-
 
 fun main() {
     val grid = File("input/d08p01.txt").readLines().map { line ->
@@ -71,31 +54,31 @@ fun main() {
     var maxScore = Int.MIN_VALUE
     for (i in rangeX) {
         for (j in rangeY) {
-            maxScore = calculateScore(i, j, grid).coerceAtLeast(maxScore)
+            maxScore = calculateScore(Position(i, j), grid).coerceAtLeast(maxScore)
         }
     }
     println(maxScore)
 }
 
-fun calculateScore(x: Int, y: Int, grid: Array<IntArray>): Int {
-    return Direction.values().map { direction -> calculateScore(x, y, grid, direction) }.reduce { a, b -> a * b }
+fun calculateScore(pos: Position, grid: Array<IntArray>): Int {
+    return Direction.values().map { direction -> calculateScore(pos, grid, direction) }.reduce { a, b -> a * b }
 }
 
 fun calculateScore(
-    x: Int, y: Int, grid: Array<IntArray>, direction: Direction
+    pos: Position, grid: Array<IntArray>, direction: Direction
 ):
         Int {
-    return calculateScoreForHeight(x + direction.deltaX, y + direction.deltaY, grid[x][y], grid, direction)
+    return calculateScoreForHeight(pos.move(direction), grid[pos.x][pos.y], grid, direction)
 }
 
-fun calculateScoreForHeight(x: Int, y: Int, height: Int, grid: Array<IntArray>, direction: Direction): Int {
+fun calculateScoreForHeight(pos: Position, height: Int, grid: Array<IntArray>, direction: Direction): Int {
     val rangeX = grid.indices
     val rangeY = grid[0].indices
-    return if (!(x in rangeX && y in rangeY)) {
+    return if (!(pos.inRanges(rangeX, rangeY))) {
         0
-    } else if (grid[x][y] >= height) {
+    } else if (grid[pos.x][pos.y] >= height) {
         1
     } else {
-        1 + calculateScoreForHeight(x + direction.deltaX, y + direction.deltaY, height, grid, direction)
+        1 + calculateScoreForHeight(pos.move(direction), height, grid, direction)
     }
 }

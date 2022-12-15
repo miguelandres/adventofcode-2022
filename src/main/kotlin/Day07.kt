@@ -1,6 +1,5 @@
 import java.io.File
 
-
 abstract class FileSystemNode(val name: String, val parent: Directory?) {
 
     abstract fun size(): Int

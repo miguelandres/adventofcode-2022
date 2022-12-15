@@ -65,7 +65,6 @@ fun main() {
 
 }
 
-
 fun parseListMessage(s: String): Pair<ListMessage, Int> {
     // Remove [
     var currentIndex = 1
