@@ -7,6 +7,17 @@ enum class Direction(val deltaX: Int, val deltaY: Int) {
     RIGHT(0, 1)
 }
 
+enum class DirectionWithDiagonals(val deltaX: Int, val deltaY: Int) {
+    UP(-1, 0),
+    UP_LEFT(-1, -1),
+    UP_RIGHT(-1, 1),
+    DOWN(1, 0),
+    DOWN_LEFT(1, -1),
+    DOWN_RIGHT(1, 1),
+    LEFT(0, -1),
+    RIGHT(0, 1)
+}
+
 
 fun main() {
     val grid = File("input/d08p01.txt").readLines().map { line ->
