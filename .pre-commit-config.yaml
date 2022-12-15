@@ -27,8 +27,8 @@ repos:
     hooks:
     - id: scalafmt
       args: [ -p9090, -t ] # run in server mode on port 9090 and pass `--test` to scalafmt; alternatively you can place here other supported cmdline arguments
-#  - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
-#    rev: v2.5.0
-#    hooks:
-#      - id: pretty-format-kotlin
-#        args: [ --autofix ]
+  - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+    rev: v2.5.0
+    hooks:
+      - id: pretty-format-kotlin
+        args: [ --autofix ]
