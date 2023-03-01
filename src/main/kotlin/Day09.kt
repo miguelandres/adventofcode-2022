@@ -1,25 +1,33 @@
 import utils.Direction
 import utils.Position
 import utils.readAocInput
+import utils.wrapInTimeMeasurement
+import utils.wrapInTimeMeasurementWithResult
 
 fun main() {
-    val instructions = readAocInput(9).map { line ->
-        Pair(
-            when (line[0]) {
-                'R' -> Direction.RIGHT
-                'L' -> Direction.LEFT
-                'U' -> Direction.UP
-                else -> Direction.DOWN
-            },
-            line.substring(2).toInt()
-        )
-    }
+    val instructions = wrapInTimeMeasurementWithResult({
+        readAocInput(9).map { line ->
+            Pair(
+                when (line[0]) {
+                    'R' -> Direction.RIGHT
+                    'L' -> Direction.LEFT
+                    'U' -> Direction.UP
+                    else -> Direction.DOWN
+                },
+                line.substring(2).toInt(),
+            )
+        }
+    }, "parse")
 
-    var positionSet = calculateTailPositions(instructions, 2)
-    println(positionSet.count())
+    wrapInTimeMeasurement({
+        val positionSet = calculateTailPositions(instructions, 2)
+        println(positionSet.count())
+    }, "part1")
 
-    positionSet = calculateTailPositions(instructions, 10)
-    println(positionSet.count())
+    wrapInTimeMeasurement({
+        val positionSet = calculateTailPositions(instructions, 10)
+        println(positionSet.count())
+    }, "part2")
 }
 
 private fun calculateTailPositions(instructions: List<Pair<Direction, Int>>, knots: Int): Set<Position> {

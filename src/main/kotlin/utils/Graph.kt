@@ -7,7 +7,7 @@ data class GraphNode<T>(
     val value: T,
     val edges: List<GraphEdge>,
     val edgesSorted: List<GraphEdge> = edges.sortedBy { it.cost },
-    val edgeMap: Map<String, GraphEdge> = edges.associateBy { it.destination }
+    val edgeMap: Map<String, GraphEdge> = edges.associateBy { it.destination },
 )
 
 fun <T> getAllDistancesFloydWarshall(nodes: List<GraphNode<T>>): Map<Pair<String, String>, Int> {

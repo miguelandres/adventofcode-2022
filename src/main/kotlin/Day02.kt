@@ -20,7 +20,7 @@ enum class Hand(private val score: Int) {
 
         override fun losingHand(): Hand =
             PAPER
-    };
+    }, ;
 
     abstract fun winningHand(): Hand
     abstract fun losingHand(): Hand

@@ -8,7 +8,7 @@ data class Monkey(
     val testValue: ULong,
     val nextMonkeyIfTrue: Int,
     val nextMonkeyIfFalse: Int,
-    var countInspections: BigInteger = BigInteger.ZERO
+    var countInspections: BigInteger = BigInteger.ZERO,
 )
 
 fun parseOperation(operator: String, operand: ULong?): (ULong) -> ULong {
@@ -33,7 +33,7 @@ fun main() {
                 operationFn,
                 lines[3].split(" ").last().toULong(),
                 lines[4].split(" ").last().toInt(),
-                lines[5].split(" ").last().toInt()
+                lines[5].split(" ").last().toInt(),
             )
         }.toList()
 
@@ -60,7 +60,7 @@ fun main() {
 private fun executeRounds(
     monkeys: List<Monkey>,
     worryReduceFn: (ULong) -> ULong,
-    rounds: Int
+    rounds: Int,
 ) {
     for (x in 1..rounds) {
         monkeys.forEach { m ->
@@ -72,7 +72,7 @@ private fun executeRounds(
 private fun executeTurn(
     m: Monkey,
     monkeys: List<Monkey>,
-    worryReduceFn: (ULong) -> ULong
+    worryReduceFn: (ULong) -> ULong,
 ) {
     while (m.items.isNotEmpty()) {
         var currentItem = m.items.first()

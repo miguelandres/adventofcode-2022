@@ -8,11 +8,14 @@ import utils.wrapInTimeMeasurementWithResult
 private data class MemoizationPosition(
     val time: Int,
     val location: String,
-    val valvesOpen: Set<String>
+    val valvesOpen: Set<String>,
 )
 
 fun main() {
-    val (graph, valvesWithPressure, distances) = wrapInTimeMeasurementWithResult(::parseAndPreProcess, "parse and preprocess")
+    val (graph, valvesWithPressure, distances) = wrapInTimeMeasurementWithResult(
+        ::parseAndPreProcess,
+        "parse and preprocess",
+    )
     wrapInTimeMeasurement({ part1(graph, distances, valvesWithPressure) }, "part1")
     wrapInTimeMeasurement({ part2(graph, distances, valvesWithPressure) }, "part2")
 }
@@ -27,8 +30,8 @@ private fun parseAndPreProcess(): Triple<Map<String, GraphNode<Int>>, Set<String
             GraphNode(
                 valve,
                 rate,
-                words.drop(9).map { s -> s.removeSuffix(",") }.map { dest -> GraphEdge(valve, dest, 1) }
-            )
+                words.drop(9).map { s -> s.removeSuffix(",") }.map { dest -> GraphEdge(valve, dest, 1) },
+            ),
         )
     }
 
@@ -40,7 +43,7 @@ private fun parseAndPreProcess(): Triple<Map<String, GraphNode<Int>>, Set<String
 private fun part1(
     graph: Map<String, GraphNode<Int>>,
     distances: Map<Pair<String, String>, Int>,
-    valvesWithPressure: Set<String>
+    valvesWithPressure: Set<String>,
 ) {
     val nextSteps = listOf(Pair(MemoizationPosition(0, "AA", emptySet()), 0))
     val (max, _) = openValves(nextSteps, graph, distances, valvesWithPressure)
@@ -50,7 +53,7 @@ private fun part1(
 private fun part2(
     graph: Map<String, GraphNode<Int>>,
     distances: Map<Pair<String, String>, Int>,
-    valvesWithPressure: Set<String>
+    valvesWithPressure: Set<String>,
 ) {
     val nextSteps = listOf(Pair(MemoizationPosition(4, "AA", emptySet()), 0))
     val (_, solutions) = openValves(nextSteps, graph, distances, valvesWithPressure)
@@ -77,7 +80,7 @@ private fun openValves(
     nextSteps: List<Pair<MemoizationPosition, Int>>,
     graph: Map<String, GraphNode<Int>>,
     distances: Map<Pair<String, String>, Int>,
-    valvesWithPressure: Set<String>
+    valvesWithPressure: Set<String>,
 ): Pair<Int, HashMap<MemoizationPosition, Int>> {
     var nextSteps1 = nextSteps
     val solutions = HashMap<MemoizationPosition, Int>()
@@ -104,13 +107,13 @@ private fun generateNextSteps(
     graph: Map<String, GraphNode<Int>>,
     distances: Map<Pair<String, String>, Int>,
     valvesWithPressure: Set<String>,
-    solutions: HashMap<MemoizationPosition, Int>
+    solutions: HashMap<MemoizationPosition, Int>,
 ): List<Pair<MemoizationPosition, Int>> {
     val moves =
         valvesWithPressure.filter { it !in pos.valvesOpen }.map { destination ->
             Pair(
                 pos.copy(time = pos.time + distances[Pair(pos.location, destination)]!!, location = destination),
-                pressureReleased
+                pressureReleased,
             )
         }.plus(Pair(pos.copy(time = pos.time + 1), pressureReleased))
 
@@ -118,8 +121,8 @@ private fun generateNextSteps(
         moves.plus(
             Pair(
                 pos.copy(time = pos.time + 1, valvesOpen = pos.valvesOpen.plus(pos.location)),
-                pressureReleased + graph[pos.location]!!.value * (29 - pos.time)
-            )
+                pressureReleased + graph[pos.location]!!.value * (29 - pos.time),
+            ),
         )
     } else {
         moves

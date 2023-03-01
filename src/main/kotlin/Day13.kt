@@ -53,7 +53,7 @@ fun main() {
     println(
         pairList.map { it.first.compareTo(it.second) }
             .mapIndexed { index, it -> if (it < 0) index + 1 else null }
-            .filterNotNull().sum()
+            .filterNotNull().sum(),
     )
     val sortedList = list.plus(sequenceOf(parseListMessage("[[2]]").first, parseListMessage("[[6]]").first))
         .sorted().map { it.toString() }.toList()

@@ -15,7 +15,7 @@ fun main() {
         increases.map {
             current += it
             current
-        }
+        },
     )
     val interestingCycles = sequenceOf(20, 60, 100, 140, 180, 220)
 

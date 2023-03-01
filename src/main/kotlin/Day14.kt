@@ -2,6 +2,8 @@ import utils.DirectionWithDiagonals
 import utils.Position
 import utils.readAocInput
 import utils.splitWithPrefix
+import utils.wrapInTimeMeasurement
+import utils.wrapInTimeMeasurementWithResult
 
 fun parsePosition(s: String, delimiter: String = ","): Position {
     val parts = s.split(delimiter)
@@ -13,24 +15,30 @@ fun parsePositionWithAxisNames(s: String, delimiter: String): Position {
 }
 
 fun main() {
-    val pointSet = readAocInput(14).flatMap {
-        val listPositions = it.split(" -> ").map { pos -> parsePosition(pos) }
-        val pairs = listPositions.dropLast(1).zip(listPositions.drop(1))
-        pairs.flatMap { pair ->
-            pair.first.cartesianLineTo(pair.second)!!
+    val pointSet = wrapInTimeMeasurementWithResult({
+        readAocInput(14).flatMap {
+            val listPositions = it.split(" -> ").map { pos -> parsePosition(pos) }
+            val pairs = listPositions.dropLast(1).zip(listPositions.drop(1))
+            pairs.flatMap { pair ->
+                pair.first.cartesianLineTo(pair.second)!!
+            }.toHashSet()
         }.toHashSet()
-    }.toHashSet()
+    }, "parse")
 
-    val grid = createGrid(pointSet)
-    val maxDepth = pointSet.maxOf { it.y }
-    val count = simulate(grid, maxDepth)
-    grid.print()
-    println(count)
+    wrapInTimeMeasurement({
+        val grid = createGrid(pointSet)
+        val maxDepth = pointSet.maxOf { it.y }
+        val count = simulate(grid, maxDepth)
+        // grid.print()
+        println(count)
+    }, "part1")
 
-    val gridWithFloor = createGrid(pointSet, true)
-    val countWithFloor = simulate(gridWithFloor)
-    gridWithFloor.print()
-    println(countWithFloor)
+    wrapInTimeMeasurement({
+        val gridWithFloor = createGrid(pointSet, true)
+        val countWithFloor = simulate(gridWithFloor)
+        // gridWithFloor.print()
+        println(countWithFloor)
+    }, "part2")
 }
 
 private fun simulate(grid: CaveGrid, maxDepth: Int? = null): Int {
@@ -52,14 +60,14 @@ private fun createGrid(pointSet: HashSet<Position>, withFloor: Boolean = false):
             floorDepth
         } else {
             null
-        }
+        },
     )
 }
 
 enum class CaveContents {
     AIR,
     ROCK,
-    SAND
+    SAND,
 }
 
 class CaveGrid(private val grid: HashMap<Position, CaveContents>, private val floor: Int?) {
@@ -82,7 +90,7 @@ class CaveGrid(private val grid: HashMap<Position, CaveContents>, private val fl
 
         return Pair(
             (sortedX.first().x..sortedX.last().x),
-            (0..(floor ?: sortedY.last().y))
+            (0..(floor ?: sortedY.last().y)),
         )
     }
 
@@ -108,16 +116,16 @@ class CaveGrid(private val grid: HashMap<Position, CaveContents>, private val fl
 fun simulateFall(grid: CaveGrid, maxDepth: Int?): Boolean {
     var position = Position(500, 0)
     val directions = listOf(
-        DirectionWithDiagonals.RIGHT,
+        DirectionWithDiagonals.UP,
+        DirectionWithDiagonals.UP_LEFT,
         DirectionWithDiagonals.UP_RIGHT,
-        DirectionWithDiagonals.DOWN_RIGHT
     )
     while (true) {
         if (position.y >= (maxDepth ?: 1000)) return true
         position =
             position.moveWithDiagonal(
                 directions.find { grid[position.moveWithDiagonal(it)] == CaveContents.AIR }
-                    ?: break
+                    ?: break,
             )
     }
     grid[position] = CaveContents.SAND

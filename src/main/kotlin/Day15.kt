@@ -27,12 +27,14 @@ private fun processDay15(part: Int, possibleRange: IntRange) {
     val foundBeacon =
         map.copyMapDistanceAwareDefaults().mapValues { it.value.first }.entries
             .flatMap { entry ->
-                entry.key.pointsAtManhattanDistance(entry.value + 1).filter { it.inRanges(possibleRange, possibleRange) }
+                entry.key.pointsAtManhattanDistance(entry.value + 1).filter {
+                    it.inRanges(possibleRange, possibleRange)
+                }
             }
             .find { map[it] == BeaconMapContents.UNKNOWN }!!
     println(foundBeacon)
     println(
-        foundBeacon.x.toULong() * 4_000_000UL + foundBeacon.y.toULong()
+        foundBeacon.x.toULong() * 4_000_000UL + foundBeacon.y.toULong(),
     )
 }
 
@@ -41,7 +43,7 @@ private fun countEmpties(y: Int, map: DistanceAwareSparseMap<BeaconMapContents>)
 
 private fun fillMap(
     sensorsAndBeacons: List<Pair<Position, Position>>,
-    map: DistanceAwareSparseMap<BeaconMapContents>
+    map: DistanceAwareSparseMap<BeaconMapContents>,
 ) {
     for ((sensor, beacon) in sensorsAndBeacons) {
         val distance = sensor.manhattanDistance(beacon)
@@ -55,5 +57,5 @@ private enum class BeaconMapContents {
     UNKNOWN,
     BEACON,
     SENSOR,
-    EMPTY
+    EMPTY,
 }
