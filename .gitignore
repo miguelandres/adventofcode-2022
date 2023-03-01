@@ -5,3 +5,11 @@
 project/
 target/
 out/
+build/
+
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
