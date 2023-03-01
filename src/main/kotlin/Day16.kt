@@ -2,6 +2,8 @@ import utils.GraphEdge
 import utils.GraphNode
 import utils.getAllDistancesFloydWarshall
 import utils.readAocInput
+import utils.wrapInTimeMeasurement
+import utils.wrapInTimeMeasurementWithResult
 
 private data class MemoizationPosition(
     val time: Int,
@@ -10,7 +12,13 @@ private data class MemoizationPosition(
 )
 
 fun main() {
-    val graph = readAocInput(16, 0).associate {
+    val (graph, valvesWithPressure, distances) = wrapInTimeMeasurementWithResult(::parseAndPreProcess, "parse and preprocess")
+    wrapInTimeMeasurement({ part1(graph, distances, valvesWithPressure) }, "part1")
+    wrapInTimeMeasurement({ part2(graph, distances, valvesWithPressure) }, "part2")
+}
+
+private fun parseAndPreProcess(): Triple<Map<String, GraphNode<Int>>, Set<String>, Map<Pair<String, String>, Int>> {
+    val graph = readAocInput(16, 1).associate {
         val words = it.split(" ")
         val valve = words[1]
         val rate = words[4].dropLast(1).drop(5).toInt()
@@ -26,14 +34,59 @@ fun main() {
 
     val valvesWithPressure = graph.entries.map { it.value }.filter { it.value > 0 }.map { it.name }.toSet()
     val distances = getAllDistancesFloydWarshall(graph.values.toList())
+    return Triple(graph, valvesWithPressure, distances)
+}
+
+private fun part1(
+    graph: Map<String, GraphNode<Int>>,
+    distances: Map<Pair<String, String>, Int>,
+    valvesWithPressure: Set<String>
+) {
+    val nextSteps = listOf(Pair(MemoizationPosition(0, "AA", emptySet()), 0))
+    val (max, _) = openValves(nextSteps, graph, distances, valvesWithPressure)
+    println(max)
+}
+
+private fun part2(
+    graph: Map<String, GraphNode<Int>>,
+    distances: Map<Pair<String, String>, Int>,
+    valvesWithPressure: Set<String>
+) {
+    val nextSteps = listOf(Pair(MemoizationPosition(4, "AA", emptySet()), 0))
+    val (_, solutions) = openValves(nextSteps, graph, distances, valvesWithPressure)
+    val entries = solutions.entries.sortedBy { it.value }.reversed()
+    var max = Int.MIN_VALUE
+    entries.forEach { sol1 ->
+        max = max.coerceAtLeast(sol1.value)
+        val entriesIterator = entries.iterator()
+        while (entriesIterator.hasNext()) {
+            val sol2 = entriesIterator.next()
+            if (sol2.value + sol1.value <= max) {
+                // Entries are sorted by value, which means that values are gonna be smaller from now on.
+                break
+            }
+            if (sol2.key.valvesOpen.intersect(sol1.key.valvesOpen).isEmpty()) {
+                max = sol1.value + sol2.value
+            }
+        }
+    }
+    println(max)
+}
+
+private fun openValves(
+    nextSteps: List<Pair<MemoizationPosition, Int>>,
+    graph: Map<String, GraphNode<Int>>,
+    distances: Map<Pair<String, String>, Int>,
+    valvesWithPressure: Set<String>
+): Pair<Int, HashMap<MemoizationPosition, Int>> {
+    var nextSteps1 = nextSteps
     val solutions = HashMap<MemoizationPosition, Int>()
-    var nextSteps = listOf(Pair(MemoizationPosition(0, "AA", emptySet()), 0))
 
     var max = Int.MIN_VALUE
 
-    while (nextSteps.isNotEmpty()) {
-        max = nextSteps.maxOf { it.second }.coerceAtLeast(max)
-        nextSteps = nextSteps.flatMap {
+    while (nextSteps1.isNotEmpty()) {
+        max = nextSteps1.maxOf { it.second }.coerceAtLeast(max)
+        nextSteps1 = nextSteps1.flatMap {
             if ((solutions[it.first] ?: Int.MIN_VALUE) < it.second) {
                 solutions[it.first] = it.second
                 generateNextSteps(it.first, it.second, graph, distances, valvesWithPressure, solutions)
@@ -42,7 +95,7 @@ fun main() {
             }
         }
     }
-    println(max)
+    return Pair(max, solutions)
 }
 
 private fun generateNextSteps(
