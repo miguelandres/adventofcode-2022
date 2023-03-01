@@ -1,5 +1,6 @@
 import utils.Direction
 import utils.Position
+import utils.circular
 import utils.readAocInput
 import utils.wrapInTimeMeasurement
 import utils.wrapInTimeMeasurementWithResult
@@ -44,7 +45,7 @@ fun main() {
         println("Shape number ${i + 1}\n\n$shape")
     }
     val jetStreams = wrapInTimeMeasurementWithResult({
-        readAocInput(17, 0).first().map {
+        readAocInput(17, 1).first().map {
             when (it) {
                 '>' -> Direction.RIGHT
                 else -> Direction.LEFT
@@ -52,27 +53,30 @@ fun main() {
         }
     }, "Parse")
 
-    wrapInTimeMeasurement({part1(jetStreams, 2022)}, "part1")
+    wrapInTimeMeasurement({process(jetStreams, 2022)}, "part1")
+    // wrapInTimeMeasurement({process(jetStreams, 1000000000000)}, "part2")
 }
 
-private fun part1(jetStreams: CircularList<Direction>, numberOfRocks: Int) {
+private fun process(jetStreams: List<Direction>, numberOfRocks: Long) {
     val fallenRocks = HashSet<Position>()
     var currentFloor = 0
-    var jetIndex = 0
+    val jetIterator = jetStreams.circular().circularIteratorWrappingIndices()
+    val shapesIterator = shapes.circular().circularIteratorWrappingIndices()
     for (i in (0 until numberOfRocks)) {
         currentFloor = currentFloor.coerceAtLeast(
             simulateRockFall(
-                Rock(shapes[i % 5], Position(2, currentFloor + 3)),
+                Rock(shapesIterator.next(), Position(2, currentFloor + 3)),
                 fallenRocks,
-                jetStreams[i % jetStreams.size],
+                jetIterator,
             ),
         )
     }
     println(currentFloor)
 }
 
-private fun simulateRockFall(rock: Rock, fallenRocks: HashSet<Position>, jetStreams: List<Direction>): Int {
+private fun simulateRockFall(rock: Rock, fallenRocks: HashSet<Position>, dirIterator: Iterator<Direction>): Int {
     while (true) {
+        val dir = dirIterator.next()
         // try to move with the jetStreams, if it can't just continue anyway
         if (rock.canMoveInDirection(dir, fallenRocks)) {
             rock.currentPosition += dir
