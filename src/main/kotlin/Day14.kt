@@ -113,7 +113,7 @@ class CaveGrid(private val grid: HashMap<Position, CaveContents>, private val fl
     }
 }
 
-fun simulateFall(grid: CaveGrid, maxDepth: Int?): Boolean {
+private fun simulateFall(grid: CaveGrid, maxDepth: Int?): Boolean {
     var position = Position(500, 0)
     val directions = listOf(
         DirectionWithDiagonals.UP,
@@ -122,11 +122,8 @@ fun simulateFall(grid: CaveGrid, maxDepth: Int?): Boolean {
     )
     while (true) {
         if (position.y >= (maxDepth ?: 1000)) return true
-        position =
-            position.moveWithDiagonal(
-                directions.find { grid[position.moveWithDiagonal(it)] == CaveContents.AIR }
-                    ?: break,
-            )
+        val dir = directions.find { grid[position + it] == CaveContents.AIR } ?: break
+        position += dir
     }
     grid[position] = CaveContents.SAND
     return false

@@ -37,7 +37,7 @@ private fun calculateTailPositions(instructions: List<Pair<Direction, Int>>, kno
 
     instructions.forEach { action ->
         for (x in 1..action.second) {
-            knotPosition[0] = knotPosition[0].move(action.first)
+            knotPosition[0] = knotPosition[0] + action.first
             for (i in 1 until knots) {
                 knotPosition[i] = knotPosition[i].adjustTail(knotPosition[i - 1])
             }

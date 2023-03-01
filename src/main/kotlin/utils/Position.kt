@@ -23,13 +23,6 @@ enum class DirectionWithDiagonals(val deltaX: Int, val deltaY: Int) {
 }
 
 data class Position(val x: Int, val y: Int) {
-    fun move(direction: Direction): Position {
-        return Position(x + direction.deltaX, y + direction.deltaY)
-    }
-
-    fun moveWithDiagonal(direction: DirectionWithDiagonals): Position {
-        return Position(x + direction.deltaX, y + direction.deltaY)
-    }
 
     fun cartesianLineTo(other: Position): List<Position>? {
         return if (x == other.x) {
@@ -71,5 +64,16 @@ data class Position(val x: Int, val y: Int) {
         } else {
             Position(x + if (deltaX > 0) 1 else -1, y + if (deltaY > 0) 1 else -1)
         }
+    }
+
+    operator fun plus(other: Position): Position {
+        return Position(x + other.x, y + other.y)
+    }
+
+    operator fun plus(direction: Direction): Position {
+        return Position(x + direction.deltaX, y + direction.deltaY)
+    }
+    operator fun plus(other: DirectionWithDiagonals): Position {
+        return Position(x + other.deltaX, y + other.deltaY)
     }
 }

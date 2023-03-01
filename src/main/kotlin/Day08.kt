@@ -72,7 +72,7 @@ fun calculateScore(
     direction: Direction,
 ):
     Int {
-    return calculateScoreForHeight(pos.move(direction), grid[pos.x][pos.y], grid, direction)
+    return calculateScoreForHeight(pos + direction, grid[pos.x][pos.y], grid, direction)
 }
 
 fun calculateScoreForHeight(pos: Position, height: Int, grid: Array<IntArray>, direction: Direction): Int {
@@ -83,6 +83,6 @@ fun calculateScoreForHeight(pos: Position, height: Int, grid: Array<IntArray>, d
     } else if (grid[pos.x][pos.y] >= height) {
         1
     } else {
-        1 + calculateScoreForHeight(pos.move(direction), height, grid, direction)
+        1 + calculateScoreForHeight(pos + direction, height, grid, direction)
     }
 }

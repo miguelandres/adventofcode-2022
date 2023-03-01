@@ -26,7 +26,8 @@ class DistanceAwareSparseMap<T>(private val defaultValue: T) : SparseMap<T>(defa
     private val mapDistanceAwareDefaults = HashMap<Position, Pair<Int, T>>()
 
     private fun generateDefault(pos: Position) =
-        mapDistanceAwareDefaults.entries.find { entry -> entry.key.manhattanDistance(pos) <= entry.value.first }?.value?.second
+        mapDistanceAwareDefaults.entries.find { entry -> entry.key.manhattanDistance(pos) <= entry.value.first }
+            ?.value?.second
             ?: defaultValue
 
     fun addDistanceAwareDefault(pos: Position, distance: Int, value: T) {

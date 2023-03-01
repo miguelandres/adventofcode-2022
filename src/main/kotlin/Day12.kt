@@ -58,7 +58,7 @@ private fun findBestPath(
                 return cost
             }
             queue = queue.plus(
-                Direction.values().map { pos.move(it) }
+                Direction.values().map { pos + it }
                     .filter { it.inRanges(rangeX, rangeY) }
                     .filter { canMoveToElevationFn(grid[pos.x][pos.y], grid[it.x][it.y]) }
                     .map { Pair(it, cost + 1) },
